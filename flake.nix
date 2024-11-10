@@ -4,17 +4,32 @@
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin"];
-      perSystem = {pkgs, ...}: {
+      perSystem = {
+        pkgs,
+        config,
+        ...
+      }: {
         devShells.default = pkgs.mkShell {
-          packages = builtins.attrValues {
-            inherit (pkgs) tlaplus18;
+          inputsFrom = builtins.attrValues {
+            inherit (config.devShells) specification implementation;
           };
-        }; # devShells.default
+
+          name = "yap-default-shell";
+        };
+
+        treefmt.config = {
+          projectRootFile = "flake.nix";
+          flakeFormatter = true;
+          programs.alejandra.enable = true;
+        };
       }; # perSystem
+      imports = [./implementation ./specifications inputs.treefmt.flakeModule];
     };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+
+    treefmt.url = "github:numtide/treefmt-nix";
   };
 }
