@@ -12,6 +12,7 @@
         devShells.default = pkgs.mkShell {
           inputsFrom = builtins.attrValues {
             inherit (config.devShells) specification implementation;
+            inherit (config.treefmt.build.programs) alejandra;
           };
 
           name = "yap-default-shell";
@@ -23,7 +24,7 @@
           programs.alejandra.enable = true;
         };
       }; # perSystem
-      imports = [./implementation ./specifications inputs.treefmt.flakeModule];
+      imports = [./implementation ./specification inputs.treefmt.flakeModule];
     };
 
   inputs = {

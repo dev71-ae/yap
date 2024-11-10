@@ -1,5 +1,9 @@
 {
-  perSystem = {pkgs, ...}: let
+  perSystem = {
+    pkgs,
+    config,
+    ...
+  }: let
     opkgs = pkgs.ocaml-ng.ocamlPackages_5_2;
     dune-dev = pkgs.ocamlPackages.dune_3.overrideAttrs (_: {
       pname = "dune-dev";
@@ -23,6 +27,7 @@
       packages = builtins.attrValues {
         inherit dune-dev;
         inherit (opkgs) ocaml ocaml-lsp utop;
+        inherit (config.treefmt.build.programs) ocamlformat;
       };
 
       name = "yap-implementation-shell";

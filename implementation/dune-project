@@ -9,6 +9,8 @@
 
 (maintainers "Rashid Almheiri <r.muhairi@pm.me>")
 
+(generate_opam_files true)
+
 (license MIT)
 
 (package
