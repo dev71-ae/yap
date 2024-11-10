@@ -1,0 +1,20 @@
+(lang dune 3.17)
+
+(name yap)
+
+(source
+ (github dev71-ae/yap))
+
+(authors "Rashid Almheiri <r.muhairi@pm.me>")
+
+(maintainers "Rashid Almheiri <r.muhairi@pm.me>")
+
+(license MIT)
+
+(package
+ (name yap)
+ (synopsis "Reference implementation of the Yap Protocol")
+ (depends
+  (ocaml
+   (>= 5.2))
+  dune))
